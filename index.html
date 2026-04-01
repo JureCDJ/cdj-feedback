@@ -440,6 +440,10 @@ textarea::placeholder { color: #3a3a3a; }
 // ── STATE ────────────────────────────────────────
 const state = { q1: [], q2: [], comment: '' };
 
+// ── Preberi ime stranke iz URL parametra ─────────
+const urlParams = new URLSearchParams(window.location.search);
+const imeStranke = urlParams.get('ime') || '—';
+
 // ── NAVIGATION ───────────────────────────────────
 function goTo(n) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -471,6 +475,7 @@ async function submitForm() {
   goTo(3); // pokaži spinner
 
   const templateParams = {
+    stranka:     imeStranke,
     q1_odgovori: state.q1.length ? '• ' + state.q1.join('\n• ') : '— ni izbranega',
     q2_odgovori: state.q2.length ? '• ' + state.q2.join('\n• ') : '— ni izbranega',
     komentar:    state.comment   || '— ni komentarja',
